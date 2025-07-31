@@ -1,0 +1,40 @@
+import { Router } from 'express';
+
+const router = Router();
+const reports = [];
+
+router.post('/report', (req, res) => {
+  const { description, photo, lat, lon } = req.body;
+  const report = {
+    report_id: reports.length + 1,
+    timestamp: new Date().toISOString(),
+    lat,
+    lon,
+    description,
+    photo_url: photo,
+    verified: false,
+    user_id: req.userId || null,
+    source: 'manual',
+  };
+  reports.push(report);
+  res.status(201).json(report);
+});
+
+router.get('/reports', (req, res) => {
+  const { lat, lon, radius = 10 } = req.query;
+  if (!lat || !lon) return res.json(reports);
+  const filtered = reports.filter((r) => {
+    const dx = r.lat - parseFloat(lat);
+    const dy = r.lon - parseFloat(lon);
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    return distance <= radius;
+  });
+  res.json(filtered);
+});
+
+// Placeholder for LM Studio, RAG plugins, and external mCP servers
+router.use('/plugins', (req, res) => {
+  res.json({ message: 'Plugin endpoint placeholder' });
+});
+
+export default router;

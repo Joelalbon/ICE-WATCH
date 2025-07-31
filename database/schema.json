@@ -1,0 +1,11 @@
+{
+  "report_id": "number",
+  "timestamp": "ISO8601 string",
+  "lat": "number",
+  "lon": "number",
+  "description": "string",
+  "photo_url": "string",
+  "verified": "boolean",
+  "user_id": "string",
+  "source": "string"
+}
