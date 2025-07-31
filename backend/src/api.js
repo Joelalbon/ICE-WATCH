@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import lmStudioRouter from './lmStudio.js';
+import ragRouter from './rag.js';
+import mcpRouter from './mcp.js';
 
 const router = Router();
 const reports = [];
@@ -32,9 +35,8 @@ router.get('/reports', (req, res) => {
   res.json(filtered);
 });
 
-// Placeholder for LM Studio, RAG plugins, and external mCP servers
-router.use('/plugins', (req, res) => {
-  res.json({ message: 'Plugin endpoint placeholder' });
-});
+router.use('/lm', lmStudioRouter);
+router.use('/rag', ragRouter);
+router.use('/mcp', mcpRouter);
 
 export default router;
